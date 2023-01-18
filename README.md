@@ -1,5 +1,5 @@
 # ansible-system-update
-This is the code I wrote for the [Ansible video](https://youtu.be/2ILbndq7HfE) I made in 2018. If you want to run it yourself, you'll need:
+Requirements:
 
 * Ansible 2.0 or greater (install it via python-pip)
 * A server (or five) to run it against. Localhost [works](https://docs.ansible.com/ansible/2.4/ansible-playbook.html) too.
