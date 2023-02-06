@@ -5,6 +5,8 @@
   become: true # This makes it so Ansible becomes root to run privilaged tasks such as updating the system
   tasks:
   - name: Upgrade all installed packages for Debian and Ubuntu
+    async: 45
+    poll: 0
     apt:
       name: "*"
       state: latest
@@ -12,6 +14,8 @@
       force_apt_get: yes
     when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
   - name: Upgrade all installed packages for CentOS
+    async: 45
+    poll: 0
     yum:
       name: '*'
       state: latest
