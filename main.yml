@@ -4,15 +4,16 @@
 - hosts: all # Replace this once you add your hosts; localhost will require a password which will probably fail by default
   become: true # This makes it so Ansible becomes root to run privilaged tasks such as updating the system
   tasks:
-  - name: Upgrade all installed packages for Debian and Ubuntu
+  - name: Run the equivalent of "apt-get update" as a separate step
     async: 45
     poll: 0
     apt:
-      name: "*"
-      state: latest
       update_cache: yes
-      force_apt_get: yes
+      cache_valid_time: 3600
     when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+  - name: Update all packages to the latest version
+    apt:
+      upgrade: dist
   - name: Upgrade all installed packages for CentOS
     async: 45
     poll: 0
