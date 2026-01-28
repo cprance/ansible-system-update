@@ -1,24 +1,9 @@
-# NOTE01: Be sure to modify your /etc/ansible/hosts file to include your hosts!
-# NOTE02: Be sure to ssh-add private key!
 ---
-- hosts: all # Replace this once you add your hosts; localhost will require a password which will probably fail by default
-  become: true # This makes it so Ansible becomes root to run privilaged tasks such as updating the system
-  become_method: enable
+- hosts: all
+  become: yes
   tasks:
-  - name: Run the equivalent of "apt-get update" as a separate step
-    async: 45
-    poll: 0
-    apt:
-      update_cache: yes
-      cache_valid_time: 3600
-    when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
-  - name: Update all packages to the latest version
-    apt:
-      upgrade: dist
-  - name: Upgrade all installed packages for CentOS
-    async: 45
-    poll: 0
-    yum:
-      name: '*'
-      state: latest
-    when: ansible_distribution == "CentOS"
+    - name: Update apt cache and upgrade all packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+        force_apt_get: yes
